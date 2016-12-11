@@ -1,0 +1,36 @@
+{
+  "name": "tickets",
+  "version": "1.0.0",
+  "description": "This is a Bug tracker application developed using MongoDB , ExpressJS , Angular 2 and Node.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rama99/Tickets.git"
+  },
+  "keywords": [
+    "tickets",
+    "MEAN",
+    "node",
+    "angular",
+    "2",
+    "mongodb"
+  ],
+  "author": "Rama Kishore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rama99/Tickets/issues"
+  },
+  "homepage": "https://github.com/rama99/Tickets#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "co": "^4.6.0",
+    "co-express": "^1.2.2",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "express-session": "^1.14.2",
+    "mongodb": "^2.2.15"
+  }
+}

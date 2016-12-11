@@ -1,0 +1,25 @@
+<div *ngIf="ticket">
+
+
+  <label>Ticket Details of:</label>&nbsp; {{ticket?.ticketID}}
+     
+  <h3><strong>Title:&nbsp;</strong>{{ticket?.title}}</h3>
+
+  <h3><strong>Description:&nbsp;</strong>{{ticket?.description}}</h3>
+
+  <h3><strong>Date:&nbsp;</strong>{{ticket?.createdDate | date}}</h3>
+    
+  <h3><strong>Project Name:&nbsp;</strong>{{ticket?.projectName}}</h3>
+
+  <h3><strong>Severity:&nbsp;</strong>{{ticket?.severityName}}</h3>
+
+  <h3><strong>Status:&nbsp;</strong>{{ticket?.statusText}}</h3>
+ 
+ <h3><strong>Comments</strong></h3>
+ <div *ngFor="let comment of ticket.comments">
+ <h3>[ {{comment.commentDate | date}} ]</h3> 
+ <h3>{{comment.commentText}}</h3>
+ <hr>
+ </div>
+ </div>
+ 
