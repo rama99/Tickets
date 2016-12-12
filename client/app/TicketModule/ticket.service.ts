@@ -10,6 +10,7 @@ import { TicketRequest ,
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import 'rxjs/add/Observable/of';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class TicketService
@@ -31,28 +32,16 @@ export class TicketService
 		return ObservableProjects;
 	}
 
-	GetSeverities():Observable<Array<Severity>> {
+	GetSeverities():Observable<Array<Severity>> {	
 
-		let severities = [
-		    {severityID:'' , severityName:'Select a Severity'},
-			{severityID:'LOW' , severityName:'LOW'},
-			{severityID:'MEDIUM' , severityName:'MEDUIM'}
-		];
-
-		return Observable.of(severities);		
+		return this.http.get('/tickets/severities')
+						 .map(res => res.json());
 	} 
 
-	GetStatuses():Observable<Array<Status>> {
+	GetStatuses():Observable<Array<Status>> {	
 
-		let statuses = [
-		    {statusID:'' , statusText:'Select a Status'},
-			{statusID:'OPEN' , statusText:'OPEN'},
-			{statusID:'PENDING' , statusText:'PENDING'},
-			{statusID:'NOT A BUG' , statusText:'NOT A BUG'},
-			{statusID:'CLOSED' , statusText:'CLOSED'}
-		];
-
-		return Observable.of(statuses);		 
+		return this.http.get('/tickets/statuses')
+			.map(res => res.json());		 
 	}
 
 	OpenTickets(): Observable<Array<TicketResponse>> {

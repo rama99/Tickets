@@ -12,6 +12,7 @@ var core_1 = require("@angular/core");
 var Observable_1 = require("rxjs/Observable");
 var http_1 = require("@angular/http");
 require("rxjs/add/Observable/of");
+require("rxjs/add/operator/map");
 var TicketService = (function () {
     function TicketService(http) {
         this.http = http;
@@ -27,22 +28,12 @@ var TicketService = (function () {
         return ObservableProjects;
     };
     TicketService.prototype.GetSeverities = function () {
-        var severities = [
-            { severityID: '', severityName: 'Select a Severity' },
-            { severityID: 'LOW', severityName: 'LOW' },
-            { severityID: 'MEDIUM', severityName: 'MEDUIM' }
-        ];
-        return Observable_1.Observable.of(severities);
+        return this.http.get('/tickets/severities')
+            .map(function (res) { return res.json(); });
     };
     TicketService.prototype.GetStatuses = function () {
-        var statuses = [
-            { statusID: '', statusText: 'Select a Status' },
-            { statusID: 'OPEN', statusText: 'OPEN' },
-            { statusID: 'PENDING', statusText: 'PENDING' },
-            { statusID: 'NOT A BUG', statusText: 'NOT A BUG' },
-            { statusID: 'CLOSED', statusText: 'CLOSED' }
-        ];
-        return Observable_1.Observable.of(statuses);
+        return this.http.get('/tickets/statuses')
+            .map(function (res) { return res.json(); });
     };
     TicketService.prototype.OpenTickets = function () {
         var OpenTickets = this.TicketsCollection;
