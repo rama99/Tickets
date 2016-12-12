@@ -6,6 +6,7 @@ const ejs = require('ejs');
 
 const tickets = require('./routes/tickets');
 const index = require('./routes/index');
+const users = require('./routes/users');
 
 //-- set view engine
 app.set('view engine', 'ejs');
@@ -23,6 +24,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 //-- set routes
 app.use('/' , index);
+app.use('/' , users);
 app.use('/tickets' , tickets);
 
 

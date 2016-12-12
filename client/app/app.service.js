@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/Observable/of");
+require("rxjs/add/operator/map");
 var AppService = (function () {
     function AppService(http) {
         this.http = http;
@@ -25,25 +26,50 @@ var AppService = (function () {
         this.pageTitle = "Bug Tracker";
     };
     AppService.prototype.validateLogin = function (loginRequest) {
-        //-- validate userName / Password
-        var user = this.usersList.find(function (user) {
-            return (user.userName == loginRequest.login && user.password == loginRequest.password);
+        var _this = this;
+        //-- http call
+        this.http.post('/login', {})
+            .map(function (res) { return res.json(); })
+            .map(function (res) {
+            console.log('VALID USER', res);
+            if (res) {
+                _this.canActivate = true;
+                _this.userName = loginRequest.login;
+                _this.fullName = res.firstName + ' ' + res.lastName;
+                localStorage.setItem('userName', _this.userName);
+                localStorage.setItem('fullName', _this.fullName);
+                console.log('app service isValidUser()', _this.canActivate);
+                return true;
+            }
+            else {
+                _this.canActivate = false;
+                _this.userName = '';
+                console.log('app service isValidUser()', _this.canActivate);
+                return false;
+            }
         });
-        if (user) {
-            this.canActivate = true;
-            this.userName = loginRequest.login;
-            this.fullName = user.firstName + ' ' + user.lastName;
-            localStorage.setItem('userName', this.userName);
-            localStorage.setItem('fullName', this.fullName);
-            console.log('app service isValidUser()', this.canActivate);
-            return true;
+        //-- validate userName / Password
+        /*let user = this.usersList.find( (user:User) => {
+            return (user.userName == loginRequest.login && user.password == loginRequest.password);
+        })
+        
+        if(user)
+        {
+         this.canActivate = true;
+         this.userName = loginRequest.login;
+         this.fullName = user.firstName + ' ' + user.lastName;
+         localStorage.setItem('userName', this.userName);
+         localStorage.setItem('fullName' , this.fullName);
+         console.log('app service isValidUser()' , this.canActivate);
+         return true;
         }
-        else {
-            this.canActivate = false;
-            this.userName = '';
-            console.log('app service isValidUser()', this.canActivate);
-            return false;
-        }
+        else
+        {
+         this.canActivate = false;
+         this.userName = '';
+         console.log('app service isValidUser()' , this.canActivate)
+         return false;
+        }*/
     };
     AppService.prototype.isValidUser = function () {
         //-- add  logic to check for validation here..

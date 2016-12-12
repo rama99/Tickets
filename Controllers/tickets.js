@@ -1,3 +1,12 @@
+var db;
+const ObjectID = require('mongodb').ObjectID;
+const MongoClient = require('mongodb').MongoClient;
+const config = require('../config');
+const co = require('co-express');
+
+function connect() {
+    return MongoClient.connect(config.mongodbUrl);
+}
 
 module.exports.severities = function * (req , res , next) {
 
@@ -18,3 +27,11 @@ module.exports.statuses = function * (req , res , next) {
 		         ];
 
 }
+
+module.exports.projects =  function * (req , res , next) {
+
+    db = yield connect();    
+    let projects = yield db.collection("projects").find({}).toArray();    
+    projects.unshift({projectID:"" , projectName:"Select a ProjectXX"});
+    return yield projects;
+} 

@@ -7,6 +7,7 @@ import { LoginRequest } from './Login';
 import { User } from './User';
 
 import 'rxjs/add/Observable/of';   
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AppService implements OnInit  {
@@ -31,8 +32,35 @@ this.pageTitle = "Bug Tracker";
 
 validateLogin(loginRequest:LoginRequest):Boolean {
 
+//-- http call
+this.http.post('/login',{})
+         .map(res => res.json())
+		 .map(res => {
+			 console.log('VALID USER' , res);
+
+			 if(res)
+			 {
+				this.canActivate = true;
+				this.userName = loginRequest.login;
+				this.fullName = res.firstName + ' ' + res.lastName;
+				localStorage.setItem('userName', this.userName);
+				localStorage.setItem('fullName' , this.fullName);
+				console.log('app service isValidUser()' , this.canActivate);	
+				return true;
+			}
+			else 
+			{	
+				this.canActivate = false;
+				this.userName = '';
+				console.log('app service isValidUser()' , this.canActivate)
+				return false;
+			}
+
+		 })
+		 
+
 //-- validate userName / Password
-let user = this.usersList.find( (user:User) => {
+/*let user = this.usersList.find( (user:User) => {
 	return (user.userName == loginRequest.login && user.password == loginRequest.password);
 })
 
@@ -52,7 +80,7 @@ else
  this.userName = '';
  console.log('app service isValidUser()' , this.canActivate)
  return false;
-}
+}*/
 
 }
 

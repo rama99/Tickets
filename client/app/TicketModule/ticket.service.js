@@ -19,13 +19,8 @@ var TicketService = (function () {
         this.TicketsCollection = [];
     }
     TicketService.prototype.GetProjects = function () {
-        var projects = [
-            { projectID: "", projectName: 'Select a Project' },
-            { projectID: 'Banking', projectName: 'Banking' },
-            { projectID: 'Insurance', projectName: 'Insurance' }
-        ];
-        var ObservableProjects = Observable_1.Observable.of(projects);
-        return ObservableProjects;
+        return this.http.get('/tickets/projects')
+            .map(function (res) { return res.json(); });
     };
     TicketService.prototype.GetSeverities = function () {
         return this.http.get('/tickets/severities')

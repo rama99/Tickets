@@ -19,4 +19,10 @@ router.get('/statuses' , co (function *(req , res , next) {
     res.json(statuses);    
 }));
 
+router.get('/projects' , co (function * (req , res , next) {
+    let projects = yield ticketsCtrl.projects(req , res , next);
+   // projects.unshift({projectID:"" , projectName:"Select a ProjectXX"}); 
+    res.json(projects);
+}))
+
 module.exports = router;

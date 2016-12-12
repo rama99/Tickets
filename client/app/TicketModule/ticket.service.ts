@@ -20,16 +20,10 @@ export class TicketService
 
 	constructor(private http:Http) { }
 
-	GetProjects():Observable<Array<Project>> {
+	GetProjects():Observable<Array<Project>> {	
 
-		let projects = [
-		  {projectID:"",  projectName:'Select a Project'},
-		  {projectID:'Banking' , projectName:'Banking'},
-		  {projectID:'Insurance' , projectName:'Insurance'}
-		];
-
-		let ObservableProjects = Observable.of(projects);
-		return ObservableProjects;
+		return this.http.get('/tickets/projects')
+											.map(res => res.json());	
 	}
 
 	GetSeverities():Observable<Array<Severity>> {	
